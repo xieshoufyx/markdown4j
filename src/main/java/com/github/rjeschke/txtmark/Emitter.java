@@ -45,8 +45,6 @@ class Emitter
     /** Plugins references **/
 	private Map<String, Plugin> plugins = new HashMap<String, Plugin>();
 
-    private List<LinkRefTransformer> linkRefTransformers = new ArrayList<LinkRefTransformer>();
-    
     /** Constructor. */
     public Emitter(final Configuration config)
     {
@@ -62,10 +60,6 @@ class Emitter
 		plugins.put(plugin.getIdPlugin(), plugin);
 	}
 
-    public void addLinkRefTransformer(LinkRefTransformer linkRefTransformer) {
-        this.linkRefTransformers.add(linkRefTransformer);
-    }
-
     /**
      * Adds a LinkRef to this set of LinkRefs.
      * 
@@ -78,7 +72,7 @@ class Emitter
     {
         LinkRef l2 = linkRef;
         try {
-            l2 = LinkRefTransformers.apply(this.linkRefTransformers, linkRef);
+            l2 = LinkRefTransformers.apply(this.config.linkRefTransformers, linkRef);
         } catch(Exception exc) {
             exc.printStackTrace();
         }

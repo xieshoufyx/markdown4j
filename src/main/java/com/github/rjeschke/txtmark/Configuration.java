@@ -18,6 +18,7 @@ package com.github.rjeschke.txtmark;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aperture_software.markdown4j.LinkRefTransformer;
 import org.markdown4j.Plugin;
 
 /**
@@ -36,6 +37,12 @@ public class Configuration
     final boolean convertNewline2Br;
     final SpanEmitter specialLinkEmitter;
     final List<Plugin> plugins;
+
+    public List<LinkRefTransformer> linkRefTransformers = new ArrayList<LinkRefTransformer>();
+
+    public void addLinkRefTransformer(LinkRefTransformer linkRefTransformer) {
+        this.linkRefTransformers.add(linkRefTransformer);
+    }
 
     /**
      * <p>
@@ -263,12 +270,20 @@ public class Configuration
          */
         public Configuration build()
         {
-            return new Configuration(this.safeMode, this.encoding, this.decorator, this.codeBlockEmitter,
+            Configuration cfg = new Configuration(this.safeMode, this.encoding, this.decorator, this.codeBlockEmitter,
                     this.forceExtendedProfile, this.convertNewline2Br, this.specialLinkEmitter, this.plugins);
+            cfg.linkRefTransformers = this.linkRefTransformers;
+            return cfg;
         }
 
 		public Decorator getDecorator() {
 			return decorator;
 		}
+
+        public List<LinkRefTransformer> linkRefTransformers = new ArrayList<LinkRefTransformer>();
+
+        public void addLinkRefTransformer(LinkRefTransformer linkRefTransformer) {
+            this.linkRefTransformers.add(linkRefTransformer);
+        }
     }
 }

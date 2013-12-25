@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+import com.aperture_software.markdown4j.LinkRefTransformer;
 import com.github.rjeschke.txtmark.Configuration;
 import com.github.rjeschke.txtmark.Configuration.Builder;
 import com.github.rjeschke.txtmark.Processor;
@@ -32,6 +33,11 @@ public class Markdown4jProcessor {
 		builder.setDecorator(decorator);
 		return this;
 	}
+
+    public void addLinkRefTransformer(LinkRefTransformer linkRefTransformer) {
+        this.builder.addLinkRefTransformer(linkRefTransformer);
+    }
+
 	public Markdown4jProcessor addHtmlAttribute(String name, String value, String ...tags) {
 		decorator.addHtmlAttribute(name, value, tags);
 		return this;
