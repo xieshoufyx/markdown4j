@@ -20,7 +20,7 @@ package com.github.rjeschke.txtmark;
  * 
  * @author René Jeschke <rene_jeschke@yahoo.de>
  */
-class LinkRef
+public class LinkRef implements Cloneable
 {
     /** The link. */
     public final String link;
@@ -49,5 +49,10 @@ class LinkRef
     public String toString()
     {
         return this.link + " \"" + this.title + "\"";
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

@@ -17,10 +17,13 @@ package com.github.rjeschke.txtmark;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.aperture_software.markdown4j.LinkRefTransformer;
+import com.aperture_software.markdown4j.LinkRefTransformers;
 import org.markdown4j.Plugin;
 
 
@@ -41,6 +44,8 @@ class Emitter
     public boolean convertNewline2Br = false;
     /** Plugins references **/
 	private Map<String, Plugin> plugins = new HashMap<String, Plugin>();
+
+    private List<LinkRefTransformer> linkRefTransformers = new ArrayList<LinkRefTransformer>();
     
     /** Constructor. */
     public Emitter(final Configuration config)
@@ -56,7 +61,11 @@ class Emitter
 	public void register(Plugin plugin) {
 		plugins.put(plugin.getIdPlugin(), plugin);
 	}
-    
+
+    public void addLinkRefTransformer(LinkRefTransformer linkRefTransformer) {
+        this.linkRefTransformers.add(linkRefTransformer);
+    }
+
     /**
      * Adds a LinkRef to this set of LinkRefs.
      * 
@@ -67,7 +76,13 @@ class Emitter
      */
     public void addLinkRef(final String key, final LinkRef linkRef)
     {
-        this.linkRefs.put(key.toLowerCase(), linkRef);
+        LinkRef l2 = linkRef;
+        try {
+            l2 = LinkRefTransformers.apply(this.linkRefTransformers, linkRef);
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        this.linkRefs.put(key.toLowerCase(), l2);
     }
 
     /**
