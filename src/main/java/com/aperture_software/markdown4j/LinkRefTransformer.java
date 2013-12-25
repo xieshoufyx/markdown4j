@@ -7,6 +7,6 @@ import com.github.rjeschke.txtmark.LinkRef;
  */
 public interface LinkRefTransformer {
 
-    public LinkRef transform(LinkRef linkRef);
+    public String transform(String link);
 
 }

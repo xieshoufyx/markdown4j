@@ -70,13 +70,7 @@ class Emitter
      */
     public void addLinkRef(final String key, final LinkRef linkRef)
     {
-        LinkRef l2 = linkRef;
-        try {
-            l2 = LinkRefTransformers.apply(this.config.linkRefTransformers, linkRef);
-        } catch(Exception exc) {
-            exc.printStackTrace();
-        }
-        this.linkRefs.put(key.toLowerCase(), l2);
+        this.linkRefs.put(key.toLowerCase(), linkRef);
     }
 
     /**
@@ -367,7 +361,8 @@ class Emitter
             {
                 this.config.decorator.openLink(out);
                 out.append(" href=\"");
-                Utils.appendValue(out, link, 0, link.length());
+                final String link2 = LinkRefTransformers.apply(config.linkRefTransformers, link);
+                Utils.appendValue(out, link2, 0, link2.length());
                 out.append('"');
                 if(comment != null)
                 {
@@ -384,7 +379,8 @@ class Emitter
         {
             this.config.decorator.openImage(out);
             out.append(" src=\"");
-            Utils.appendValue(out, link, 0, link.length());
+            final String link2 = LinkRefTransformers.apply(config.linkRefTransformers, link);
+            Utils.appendValue(out, link2, 0, link2.length());
             out.append("\" alt=\"");
             Utils.appendValue(out, name, 0, name.length());
             out.append('"');
@@ -426,11 +422,12 @@ class Emitter
             if(pos != -1)
             {
                 final String link = temp.toString();
+                String link2 = LinkRefTransformers.apply(config.linkRefTransformers, link);
                 this.config.decorator.openLink(out);
                 out.append(" href=\"");
-                Utils.appendValue(out, link, 0, link.length());
+                Utils.appendValue(out, link2, 0, link2.length());
                 out.append("\">");
-                Utils.appendValue(out, link, 0, link.length());
+                Utils.appendValue(out, link2, 0, link2.length());
                 out.append("</a>");
                 return pos;
             }

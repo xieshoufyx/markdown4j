@@ -9,13 +9,12 @@ import java.util.List;
  */
 public class LinkRefTransformers {
 
-    public static LinkRef apply(final List<LinkRefTransformer> linkRefTransformers, final LinkRef linkRef)
-            throws CloneNotSupportedException {
-        LinkRef cur = (LinkRef) linkRef.clone();
+    public static String apply(final List<LinkRefTransformer> linkRefTransformers, final String link) {
+        String s = new String(link);
         for(LinkRefTransformer lrt : linkRefTransformers) {
-            cur = lrt.transform(cur);
+            s = lrt.transform(s);
         }
-        return cur;
+        return s;
     }
 
 }
