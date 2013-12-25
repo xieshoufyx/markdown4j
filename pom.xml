@@ -13,7 +13,19 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+	
+	<distributionManagement>
+			<repository>
+					<id>inger-release</id>
+					<name>inger.co.kr releases</name>
+					<url>http://j.inger.co.kr/nexus/content/repositories/releases</url>
+			</repository>
+			<snapshotRepository>
+					<id>inger-snapshot</id>
+					<name>inger.co.kr snapshots</name>
+					<url>http://j.inger.co.kr/nexus/content/repositories/snapshots</url>
+			</snapshotRepository>
+	</distributionManagement>
 
     <dependencies>
     </dependencies>
